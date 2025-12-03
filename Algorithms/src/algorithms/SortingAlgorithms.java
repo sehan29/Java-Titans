@@ -34,6 +34,28 @@ class InsertionSort implements SortAlgorithm{
 
 // --- 1. End Insertion Sort ---
 
+// --- 2. Shell Sort ---
+class ShellSort implements SortAlgorithm {
+    @Override
+    public String getName() { return "Shell Sort"; }
+
+    @Override
+    public void sort(double[] arr) {
+        int n = arr.length;
+        for (int gap = n / 2; gap > 0; gap /= 2) {
+            for (int i = gap; i < n; i += 1) {
+                double temp = arr[i];
+                int j;
+                for (j = i; j >= gap && arr[j - gap] > temp; j -= gap)
+                    arr[j] = arr[j - gap];
+                arr[j] = temp;
+            }
+        }
+    }
+}
+// --- 2. End Shell Sort ---
+
+
 // --- 5. Heap Sort ---
 class HeapSort implements SortAlgorithm {
     @Override
