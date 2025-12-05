@@ -121,3 +121,40 @@ class MergeSort implements SortAlgorithm {
     }
 }
 // --- 6. End Merge Sort ---
+
+// --- 7. Quick Sort ---
+class QuickSort implements SortAlgorithm {
+    @Override
+    public String getName() { return "Quick Sort"; }
+
+    @Override
+    public void sort(double[] arr) {
+        quickSort(arr, 0, arr.length - 1);
+    }
+
+    private void quickSort(double[] arr, int begin, int end) {
+        if (begin < end) {
+            int partitionIndex = partition(arr, begin, end);
+            quickSort(arr, begin, partitionIndex - 1);
+            quickSort(arr, partitionIndex + 1, end);
+        }
+    }
+
+    private int partition(double[] arr, int begin, int end) {
+        double pivot = arr[end];
+        int i = (begin - 1);
+        for (int j = begin; j < end; j++) {
+            if (arr[j] <= pivot) {
+                i++;
+                double swapTemp = arr[i];
+                arr[i] = arr[j];
+                arr[j] = swapTemp;
+            }
+        }
+        double swapTemp = arr[i + 1];
+        arr[i + 1] = arr[end];
+        arr[end] = swapTemp;
+        return i + 1;
+    }
+}
+// --- 7. End Quick Sort ---
