@@ -15,6 +15,8 @@ public class SortingApp extends JFrame {
     // Modules
     private CsvHandler csvHandler;
     private List<SortAlgorithm> algorithms;
+    private PerformanceGraph graphPanel;
+
 
     // UI Components
     private JComboBox<String> columnSelector;
@@ -131,8 +133,20 @@ public class SortingApp extends JFrame {
         tableScroll.setBorder(BorderFactory.createTitledBorder("Data View"));
 
         // Bottom: Graph
-        
+        graphPanel = new PerformanceGraph();
+
         // Display Bar Chart Here
+        // Split Pane (Vertical split between Table and Graph)
+        JSplitPane rightSplit = new JSplitPane(JSplitPane.VERTICAL_SPLIT, tableScroll, graphPanel);
+        rightSplit.setDividerLocation(350);
+        rightSplit.setResizeWeight(0.5);
+
+        // Main Split Pane (Horizontal split between Sidebar and Right Content)
+        JSplitPane mainSplit = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, sideBar, rightSplit);
+        mainSplit.setDividerLocation(230); // Fixed sidebar width
+        mainSplit.setOneTouchExpandable(true);
+
+        add(mainSplit, BorderLayout.CENTER);
     }
 
     private void loadCsvFile() {
