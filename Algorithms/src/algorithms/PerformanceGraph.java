@@ -115,5 +115,6 @@ public class PerformanceGraph extends JPanel {
         g2.setFont(new Font("Segoe UI", Font.BOLD, 14));
         g2.setColor(new Color(20, 150, 100));
         g2.drawString("\nFastest Algorithm: " + fastestAlgo, paddingX, paddingY - 20);
+    }
 
 }
