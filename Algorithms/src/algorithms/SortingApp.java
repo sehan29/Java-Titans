@@ -190,6 +190,70 @@ public class SortingApp extends JFrame {
  
   // Implement Sortest Algorithm Logic Here 
   // Function Name runSortingAnalysis()
+    private void runSortingAnalysis() {
+        int colIndex = columnSelector.getSelectedIndex();
+        if (colIndex < 0) return;
+        String selectedColName = (String) columnSelector.getSelectedItem();
+
+        statusArea.append("\nStarting Analysis...\n");
+        statusArea.append("--------------------------------\n");
+        statusArea.append("Target Column: " + selectedColName + "\n");
+        try {
+            // 1. Get Data
+            double[] originalData = csvHandler.getColumnData(colIndex);
+            
+            Map<String, Long> results = new HashMap<>();
+            String bestAlgo = "";
+            long minTime = Long.MAX_VALUE;
+            double[] sortedResult = null;
+
+            // 2. Run Algorithms
+            // Print table header
+            statusArea.append("--------------------------------\n");
+            statusArea.append(String.format("%-15s | %-15s\n", "Algorithm", "Time (ns)"));
+            statusArea.append("--------------------------------\n");
+
+for (SortAlgorithm algo : algorithms) {
+
+    double[] dataCopy = Arrays.copyOf(originalData, originalData.length);
+
+    long startTime = System.nanoTime();
+    algo.sort(dataCopy);
+    long endTime = System.nanoTime();
+
+    long duration = endTime - startTime;
+    results.put(algo.getName(), duration);
+
+    // Add row to table
+    statusArea.append(
+        String.format("%-20s | %-15d\n", algo.getName(), duration)
+    );
+
+    if (duration < minTime) {
+        minTime = duration;
+        bestAlgo = algo.getName();
+        sortedResult = dataCopy;
+    }
+}
+
+            // End line
+            statusArea.append("--------------------------------\n");
+
+            
+            statusArea.append("=================================\n");
+            statusArea.append("| Best: " + bestAlgo + "     |"+"\n");
+            statusArea.append("=================================\n");
+
+            // 3. Update UI
+            graphPanel.setResults(results, bestAlgo);
+            JOptionPane.showMessageDialog(this, "Sorting Complete!\nFastest Algorithm: " + bestAlgo);
+
+        } catch (Exception e) {
+            statusArea.append("Error: " + e.getMessage() + "\n");
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Error parsing column. Ensure it is numeric.");
+        }
+    }
 
 
     public static void main(String[] args) {
