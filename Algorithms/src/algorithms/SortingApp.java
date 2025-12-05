@@ -21,6 +21,7 @@ public class SortingApp extends JFrame {
     private DefaultTableModel tableModel;
     private JTextArea statusArea;
     private JButton loadBtn, sortBtn;
+    private JTable dataTable;
     
     public SortingApp() {
         super("Algorithm Performance Analyzer");
@@ -124,6 +125,10 @@ public class SortingApp extends JFrame {
         // Top: Table
         
         // Implement View Data Logic Here
+        tableModel = new DefaultTableModel();
+        dataTable = new JTable(tableModel);
+        JScrollPane tableScroll = new JScrollPane(dataTable);
+        tableScroll.setBorder(BorderFactory.createTitledBorder("Data View"));
 
         // Bottom: Graph
         
