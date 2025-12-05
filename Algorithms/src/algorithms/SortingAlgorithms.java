@@ -89,3 +89,35 @@ class HeapSort implements SortAlgorithm {
     }
 }
 // --- 5. End Heap Sort ---
+
+// --- 6. Merge Sort ---
+class MergeSort implements SortAlgorithm {
+    @Override
+    public String getName() { return "Merge Sort"; }
+
+    @Override
+    public void sort(double[] arr) {
+        if (arr.length < 2) return;
+        int mid = arr.length / 2;
+        double[] l = new double[mid];
+        double[] r = new double[arr.length - mid];
+
+        System.arraycopy(arr, 0, l, 0, mid);
+        System.arraycopy(arr, mid, r, 0, arr.length - mid);
+
+        sort(l);
+        sort(r);
+        merge(arr, l, r);
+    }
+
+    private void merge(double[] arr, double[] l, double[] r) {
+        int i = 0, j = 0, k = 0;
+        while (i < l.length && j < r.length) {
+            if (l[i] <= r[j]) arr[k++] = l[i++];
+            else arr[k++] = r[j++];
+        }
+        while (i < l.length) arr[k++] = l[i++];
+        while (j < r.length) arr[k++] = r[j++];
+    }
+}
+// --- 6. End Merge Sort ---
